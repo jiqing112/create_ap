@@ -1,33 +1,33 @@
-## Features
-* Create an AP (Access Point) at any channel.
-* Choose one of the following encryptions: WPA, WPA2, WPA/WPA2, Open (no encryption).
-* Hide your SSID.
-* Disable communication between clients (client isolation).
-* IEEE 802.11n & 802.11ac support
-* Internet sharing methods: NATed or Bridged or None (no Internet sharing).
-* Choose the AP Gateway IP (only for 'NATed' and 'None' Internet sharing methods).
-* You can create an AP with the same interface you are getting your Internet connection.
-* You can pass your SSID and password through pipe or through arguments (see examples).
+## 特点
+* 在任何无线信道上创建热点.
+* 可以选择以下加密协议: WPA, WPA2, WPA/WPA2, Open (无加密).
+* 隐藏你的 SSID.
+* 禁止客户端之间的通信 (客户端 隔离).
+* 支持IEEE 802.11n & 802.11ac 
+* 网络共享方式: NATed 或者 Bridged 或者 无 (无联网共享).
+* 选择 AP w网关 IP (仅支持 'NATed' 和 '无网络共享').
+* 您可以使用和获得网络连接相同的接口创建AP.
+* 你可以通过管道或者参数传递SSID和密码 (看案例).
 
 
-## Dependencies
-### General
-* bash (to run this script)
-* util-linux (for getopt)
+## 依赖
+### g概括
+* bash (运行脚本)
+* util-linux 
 * procps or procps-ng
 * hostapd
 * iproute2
 * iw
-* iwconfig (you only need this if 'iw' can not recognize your adapter)
-* haveged (optional)
+* iwconfig (如果'iw'无法识别你的适配器，你只需要这个)
+* haveged (k可选的)
 
-### For 'NATed' or 'None' Internet sharing method
+### 'NATed' 或者 'None' 网络共享方式
 * dnsmasq
 * iptables
 
 
-## Installation
-### Generic
+## 安装
+### t通用
     git clone https://github.com/oblique/create_ap
     cd create_ap
     make install
@@ -40,46 +40,46 @@
     layman -f -a jorgicio
     emerge net-wireless/create_ap
 
-## Examples
-### No passphrase (open network):
+## 案例
+### 无密码 (开放网络):
     create_ap wlan0 eth0 MyAccessPoint
 
-### WPA + WPA2 passphrase:
+### WPA + WPA2 密码:
     create_ap wlan0 eth0 MyAccessPoint MyPassPhrase
 
-### AP without Internet sharing:
+### 无网络共享的AP:
     create_ap -n wlan0 MyAccessPoint MyPassPhrase
 
-### Bridged Internet sharing:
+### 桥接网络共享:
     create_ap -m bridge wlan0 eth0 MyAccessPoint MyPassPhrase
 
-### Bridged Internet sharing (pre-configured bridge interface):
+### 桥接网络共享 (预配置的桥接接口):
     create_ap -m bridge wlan0 br0 MyAccessPoint MyPassPhrase
 
-### Internet sharing from the same WiFi interface:
+### 从相同的 WiFi 接口共享网络:
     create_ap wlan0 wlan0 MyAccessPoint MyPassPhrase
 
-### Choose a different WiFi adapter driver
+### 选择其他WiFi适配器驱动程序
     create_ap --driver rtl871xdrv wlan0 eth0 MyAccessPoint MyPassPhrase
 
-### No passphrase (open network) using pipe:
+### 使用管道无密码 (开放网络) :
     echo -e "MyAccessPoint" | create_ap wlan0 eth0
 
-### WPA + WPA2 passphrase using pipe:
+### 使用 WPA + WPA2 管道密码 :
     echo -e "MyAccessPoint\nMyPassPhrase" | create_ap wlan0 eth0
 
-### Enable IEEE 802.11n
+### 开启 IEEE 802.11n
     create_ap --ieee80211n --ht_capab '[HT40+]' wlan0 eth0 MyAccessPoint MyPassPhrase
 
-### Client Isolation:
+### 客户端 隔离:
     create_ap --isolate-clients wlan0 eth0 MyAccessPoint MyPassPhrase
 
-## Systemd service
-Using the persistent [systemd](https://wiki.archlinux.org/index.php/systemd#Basic_systemctl_usage) service
-### Start service immediately:
+## 系统服务
+使用systemd [systemd](https://wiki.archlinux.org/index.php/systemd#Basic_systemctl_usage) 服务
+### 立即启动服务:
     systemctl start create_ap
 
-### Start on boot:
+### 开机启动:
     systemctl enable create_ap
 
 
